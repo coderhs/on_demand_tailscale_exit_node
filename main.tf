@@ -16,6 +16,12 @@ variable "digitalocean_token" {
   type        = string
 }
 
+variable "digitalocean_location" {
+  description = "DigitalOcean Server Location"
+  type        = string
+}
+
+
 variable "tailscale_auth_key" {
   description = "Tailscale Auth Key"
   type        = string
@@ -33,9 +39,9 @@ variable "ssh_private_key_path" {
 
 resource "digitalocean_droplet" "tailscale_exit_node" {
   name   = "tailscale-exit-node"
-  size   = "s-1vcpu-1gb"
+  size   = "s-1vcpu-512mb-10gb"
   image  = "ubuntu-22-04-x64"
-  region = "nyc3"
+  region = var.digitalocean_location
   ssh_keys = [var.ssh_fingerprint]
   user_data = <<EOF
   #cloud-config

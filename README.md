@@ -35,3 +35,7 @@ Once you are done with your work, you can destroy the droplet by running the bel
 ```sh
 terraform destroy
 ```
+
+## How to get started
+
+In detail: https://hsps.in/post/setup-on-demand-tailscale-exit-node-using-terraform-and-digital-ocean/

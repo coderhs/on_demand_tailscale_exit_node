@@ -32,11 +32,6 @@ variable "ssh_fingerprint" {
   type        = string
 }
 
-variable "ssh_private_key_path" {
-  description = "Path to your SSH private key"
-  type        = string
-}
-
 resource "digitalocean_droplet" "tailscale_exit_node" {
   name   = "tailscale-exit-node"
   size   = "s-1vcpu-512mb-10gb"
@@ -58,8 +53,16 @@ resource "digitalocean_droplet" "tailscale_exit_node" {
   connection {
     type        = "ssh"
     user        = "root"
-    private_key = file(var.ssh_private_key_path)
+    private_key = file("./key/do")
     host        = self.ipv4_address
+  }
+  provisioner "remote-exec" {
+    when    = destroy
+    inline  = [
+      "echo 'Running extra step before destroying the server...'",
+      "tailscale logout",
+      "echo 'Tailscale logged out'",
+    ]
   }
 }
 

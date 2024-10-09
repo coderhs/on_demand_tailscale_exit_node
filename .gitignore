@@ -4,3 +4,4 @@ terraform.tfvars
 .terraform.lock.hcl
 *.*.backup
 *.tfstate
+!key/.gitkeep
